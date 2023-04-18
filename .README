@@ -1,0 +1,31 @@
+# Project Name
+
+Image processing API
+
+## Installation
+
+npm install
+
+## Formatting the Source Code
+
+npm run prettier
+
+## Checking the Source Code
+
+npm run lint
+
+## Running Tests
+
+npm run test
+
+## Running the Project
+
+To run the project, run the following commands:
+
+npm run start
+
+The project will start and you can access it at [http://localhost:3000]
+
+## Example
+
+http://localhost:3000/api/image?imageName=image.png&width=100&height=300
