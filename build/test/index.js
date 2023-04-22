@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("./../index");
 const supertest_1 = __importDefault(require("supertest"));
+const path_1 = __importDefault(require("path"));
+const RESIZED_IMGS_DIR = path_1.default.join(__dirname, '../../Asset/resizeImg');
 describe('Check middleware', () => {
     let response;
     const imageName = 'imgTest.pnx';

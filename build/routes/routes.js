@@ -26,17 +26,17 @@ const imgResize = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!width || !height || !imageName) {
         res
             .status(400)
-            .send('Please input parameters: width, height and imageName'); //
+            .send('Please input parameters: width, height and imageName');
         return;
     }
     const widthInt = parseInt(width);
     const heightInt = parseInt(height);
     if (isNaN(widthInt) || widthInt <= 0) {
-        res.status(400).send('Please input the width is integers'); //
+        res.status(400).send('Please input the width is integers');
         return;
     }
     if (isNaN(heightInt) || heightInt <= 0) {
-        res.status(400).send('Please input the height is integers'); //
+        res.status(400).send('Please input the height is integers');
         return;
     }
     try {
@@ -47,14 +47,10 @@ const imgResize = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         if (fs_1.default.existsSync(resizedImagePath)) {
-            res.sendFile(resizedImagePath);
+            fs_1.default.unlinkSync(resizedImagePath);
         }
-        else {
-            yield (0, sharp_1.default)(imagePath)
-                .resize(widthInt, heightInt)
-                .toFile(resizedImagePath);
-            res.sendFile(resizedImagePath);
-        }
+        yield (0, sharp_1.default)(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
+        res.sendFile(resizedImagePath);
     }
     catch (err) {
         console.error(err);

@@ -1,5 +1,8 @@
 import { app } from './../index';
 import request from 'supertest';
+import fs from 'fs';
+import path from 'path';
+const RESIZED_IMGS_DIR = path.join(__dirname, '../../Asset/resizeImg');
 
 describe('Check middleware', () => {
   let response: request.Response;

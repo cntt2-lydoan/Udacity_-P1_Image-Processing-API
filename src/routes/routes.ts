@@ -16,7 +16,7 @@ export const imgResize = async (req: Request, res: Response) => {
   if (!width || !height || !imageName) {
     res
       .status(400)
-      .send('Please input parameters: width, height and imageName'); //
+      .send('Please input parameters: width, height and imageName');
     return;
   }
 
@@ -24,12 +24,12 @@ export const imgResize = async (req: Request, res: Response) => {
   const heightInt = parseInt(height as string);
 
   if (isNaN(widthInt) || widthInt <= 0) {
-    res.status(400).send('Please input the width is integers'); //
+    res.status(400).send('Please input the width is integers');
     return;
   }
 
   if (isNaN(heightInt) || heightInt <= 0) {
-    res.status(400).send('Please input the height is integers'); //
+    res.status(400).send('Please input the height is integers');
     return;
   }
 
@@ -46,13 +46,11 @@ export const imgResize = async (req: Request, res: Response) => {
     }
 
     if (fs.existsSync(resizedImagePath)) {
-      res.sendFile(resizedImagePath);
-    } else {
-      await sharp(imagePath)
-        .resize(widthInt, heightInt)
-        .toFile(resizedImagePath);
-      res.sendFile(resizedImagePath);
+      fs.unlinkSync(resizedImagePath);
     }
+
+    await sharp(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
+    res.sendFile(resizedImagePath);
   } catch (err) {
     console.error(err);
     res.status(500).send('Error occurred while resizing the image.'); //
