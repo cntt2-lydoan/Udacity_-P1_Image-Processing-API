@@ -12,25 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("./../index");
+const index_1 = require("../index");
 const supertest_1 = __importDefault(require("supertest"));
-const path_1 = __importDefault(require("path"));
-const RESIZED_IMGS_DIR = path_1.default.join(__dirname, '../../Asset/resizeImg');
 describe('Check middleware', () => {
     let response;
-    const imageName = 'imgTest.pnx';
+    const imageName = 'image.pnt';
     const width = 100;
     const height = 100;
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        response = yield (0, supertest_1.default)(index_1.app).get(`api/image?imageName=${imageName}&width=${width}&height=${height}`);
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
     }));
     it('should return a status code of 400', () => __awaiter(void 0, void 0, void 0, function* () {
         expect(response.status).toBe(400);
         expect(response.text).toBe('Invalid file extension');
-    }));
-    it('should call the next middleware', () => __awaiter(void 0, void 0, void 0, function* () {
-        expect(response.status).toBe(200);
-        expect(response.ok).toBe(true);
     }));
 });
 describe('Check Image Exist ', () => {
@@ -39,7 +33,7 @@ describe('Check Image Exist ', () => {
     const width = 100;
     const height = 100;
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        response = yield (0, supertest_1.default)(index_1.app).get(`api/image?imageName=${imageName}&width=${width}&height=${height}`);
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
     }));
     it('should return a status code of 404', () => __awaiter(void 0, void 0, void 0, function* () {
         expect(response.status).toBe(404);
@@ -52,11 +46,11 @@ describe('Check query width', () => {
     const width = 'a';
     const height = 100;
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        response = yield (0, supertest_1.default)(index_1.app).get(`api/image?imageName=${imageName}&width=${width}&height=${height}`);
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
     }));
     it('should return a status code of 400', () => __awaiter(void 0, void 0, void 0, function* () {
         expect(response.status).toBe(400);
-        expect(response.text).toBe('Width must be positive integers');
+        expect(response.text).toBe('Please input the width is integers');
     }));
 });
 describe('Check query height', () => {
@@ -65,11 +59,11 @@ describe('Check query height', () => {
     const width = 100;
     const height = 'b';
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        response = yield (0, supertest_1.default)(index_1.app).get(`api/image?imageName=${imageName}&width=${width}&height=${height}`);
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
     }));
     it('should return a status code of 400', () => __awaiter(void 0, void 0, void 0, function* () {
         expect(response.status).toBe(400);
-        expect(response.text).toBe('Height must be positive integers');
+        expect(response.text).toBe('Please input the height is integers');
     }));
 });
 describe('Check resize image', () => {
@@ -78,7 +72,7 @@ describe('Check resize image', () => {
     const width = 100;
     const height = 100;
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        response = yield (0, supertest_1.default)(index_1.app).get(`api/image?imageName=${imageName}&width=${width}&height=${height}`);
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
     }));
     it('should resize the image based on the provided query parameters', () => __awaiter(void 0, void 0, void 0, function* () {
         expect(response.status).toBe(200);

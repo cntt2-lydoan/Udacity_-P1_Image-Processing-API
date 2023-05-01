@@ -10,7 +10,7 @@ const checkFormat = (req, res, next) => {
     const { imageName } = req.query;
     const imageFormat = path_1.default.extname(imageName).slice(1);
     if (!IMAGE_FORMATS.includes(imageFormat)) {
-        res.status(400).send('Invalid format');
+        res.status(400).send('Invalid file extension');
         return;
     }
     next();

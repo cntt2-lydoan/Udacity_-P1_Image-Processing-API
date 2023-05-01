@@ -1,29 +1,21 @@
-import { app } from './../index';
+import { app } from '../index';
 import request from 'supertest';
-import fs from 'fs';
-import path from 'path';
-const RESIZED_IMGS_DIR = path.join(__dirname, '../../Asset/resizeImg');
 
 describe('Check middleware', () => {
   let response: request.Response;
-  const imageName = 'imgTest.pnx';
+  const imageName = 'image.pnt';
   const width = 100;
   const height = 100;
 
   beforeEach(async () => {
     response = await request(app).get(
-      `api/image?imageName=${imageName}&width=${width}&height=${height}`
+      `/api/image?imageName=${imageName}&width=${width}&height=${height}`
     );
   });
 
   it('should return a status code of 400', async () => {
     expect(response.status).toBe(400);
     expect(response.text).toBe('Invalid file extension');
-  });
-
-  it('should call the next middleware', async () => {
-    expect(response.status).toBe(200);
-    expect(response.ok).toBe(true);
   });
 });
 
@@ -35,7 +27,7 @@ describe('Check Image Exist ', () => {
 
   beforeEach(async () => {
     response = await request(app).get(
-      `api/image?imageName=${imageName}&width=${width}&height=${height}`
+      `/api/image?imageName=${imageName}&width=${width}&height=${height}`
     );
   });
 
@@ -53,12 +45,12 @@ describe('Check query width', () => {
 
   beforeEach(async () => {
     response = await request(app).get(
-      `api/image?imageName=${imageName}&width=${width}&height=${height}`
+      `/api/image?imageName=${imageName}&width=${width}&height=${height}`
     );
   });
   it('should return a status code of 400', async () => {
     expect(response.status).toBe(400);
-    expect(response.text).toBe('Width must be positive integers');
+    expect(response.text).toBe('Please input the width is integers');
   });
 });
 
@@ -70,12 +62,12 @@ describe('Check query height', () => {
 
   beforeEach(async () => {
     response = await request(app).get(
-      `api/image?imageName=${imageName}&width=${width}&height=${height}`
+      `/api/image?imageName=${imageName}&width=${width}&height=${height}`
     );
   });
   it('should return a status code of 400', async () => {
     expect(response.status).toBe(400);
-    expect(response.text).toBe('Height must be positive integers');
+    expect(response.text).toBe('Please input the height is integers');
   });
 });
 
@@ -87,7 +79,7 @@ describe('Check resize image', () => {
 
   beforeEach(async () => {
     response = await request(app).get(
-      `api/image?imageName=${imageName}&width=${width}&height=${height}`
+      `/api/image?imageName=${imageName}&width=${width}&height=${height}`
     );
   });
 

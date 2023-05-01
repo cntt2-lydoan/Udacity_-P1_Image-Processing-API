@@ -12,7 +12,7 @@ export const checkFormat = (
   const imageFormat = path.extname(imageName as string).slice(1);
 
   if (!IMAGE_FORMATS.includes(imageFormat)) {
-    res.status(400).send('Invalid format');
+    res.status(400).send('Invalid file extension');
     return;
   }
 
