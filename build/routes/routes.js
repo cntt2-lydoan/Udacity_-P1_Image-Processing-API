@@ -54,7 +54,7 @@ const imgResize = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (err) {
         console.error(err);
-        res.status(500).send('Error occurred while resizing the image.'); //
+        res.status(500).send('Error occurred while resizing the image.');
     }
 });
 exports.imgResize = imgResize;

@@ -53,6 +53,6 @@ export const imgResize = async (req: Request, res: Response) => {
     res.sendFile(resizedImagePath);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error occurred while resizing the image.'); //
+    res.status(500).send('Error occurred while resizing the image.');
   }
 };

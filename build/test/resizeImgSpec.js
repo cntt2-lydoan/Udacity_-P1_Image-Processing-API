@@ -78,3 +78,16 @@ describe('Check resize image', () => {
         expect(response.status).toBe(200);
     }));
 });
+describe('error occurred while resizing the image', () => {
+    let response;
+    const imageName = 'image.png';
+    const width = 900000;
+    const height = 900000;
+    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
+    }));
+    it('should return a status code of 500', () => __awaiter(void 0, void 0, void 0, function* () {
+        expect(response.status).toBe(500);
+        expect(response.text).toBe('Error occurred while resizing the image.');
+    }));
+});
