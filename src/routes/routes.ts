@@ -50,6 +50,7 @@ export const imgResize = async (req: Request, res: Response) => {
     }
 
     await sharp(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
+    res.status(200);
     res.sendFile(resizedImagePath);
   } catch (err) {
     console.error(err);

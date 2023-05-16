@@ -14,6 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../index");
 const supertest_1 = __importDefault(require("supertest"));
+describe('Check Resize Image Success, it will return status 200', () => {
+    let response;
+    const imageName = 'image.png';
+    const width = 100;
+    const height = 100;
+    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
+    }));
+    it('should return a status code of 200', () => __awaiter(void 0, void 0, void 0, function* () {
+        expect(response.status).toBe(200);
+    }));
+});
 describe('Check middleware', () => {
     let response;
     const imageName = 'image.pnt';

@@ -1,6 +1,23 @@
 import { app } from '../index';
 import request from 'supertest';
 
+describe('Check Resize Image Success, it will return status 200', () => {
+  let response: request.Response;
+  const imageName = 'image.png';
+  const width = 100;
+  const height = 100;
+
+  beforeEach(async () => {
+    response = await request(app).get(
+      `/api/image?imageName=${imageName}&width=${width}&height=${height}`
+    );
+  });
+
+  it('should return a status code of 200', async () => {
+    expect(response.status).toBe(200);
+  });
+});
+
 describe('Check middleware', () => {
   let response: request.Response;
   const imageName = 'image.pnt';
