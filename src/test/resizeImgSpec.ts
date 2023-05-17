@@ -2,17 +2,18 @@ import { app } from '../index';
 import request from 'supertest';
 import fs from 'fs';
 import path from 'path';
+import sharp from 'sharp';
 
 describe('Check Resize Image Success, it will return status 200', () => {
   let response: request.Response;
   const imageName = 'image.png';
   const width = 200;
   const height = 300;
-
+  const fileSavedName = `${imageName}_${width}x${height}.jpg`
+  const RESIZED_IMGS_DIR = path.join(__dirname, `../../Asset/resizeImg/${fileSavedName}`);
   beforeEach(async () => {
     
-    const fileSavedName = `${imageName}_${width}x${height}.jpg`
-    const RESIZED_IMGS_DIR = path.join(__dirname, `../../Asset/resizeImg/${fileSavedName}`);
+    
     //check resizeimage exist
     if (fs.existsSync(RESIZED_IMGS_DIR)) {
       //delete resizeimage exist
@@ -28,6 +29,19 @@ describe('Check Resize Image Success, it will return status 200', () => {
   it('should return a status code of 200', async () => {
     expect(response.status).toBe(200);
   });
+
+  it('should create file ',async () => {
+    
+    expect(fs.existsSync(RESIZED_IMGS_DIR)).toBe(true);
+  })
+
+  it('should size of response corret ',async () => {
+
+    const metadata = await sharp(response.body).metadata();
+    expect(metadata.width).toBe(200);
+    expect(metadata.height).toBe(300);
+
+  })
 });
 
 describe('Check middleware', () => {
@@ -120,8 +134,8 @@ describe('Check resize image', () => {
 describe('error occurred while resizing the image', () => {
   let response: request.Response;
   const imageName = 'image.png';
-  const width = 900000;
-  const height = 900000;
+  const width = 90000;
+  const height = 90000;
 
   beforeEach(async () => {
     response = await request(app).get(
