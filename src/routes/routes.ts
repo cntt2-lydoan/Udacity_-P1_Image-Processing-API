@@ -46,12 +46,13 @@ export const imgResize = async (req: Request, res: Response) => {
     }
 
     if (fs.existsSync(resizedImagePath)) {
-      fs.unlinkSync(resizedImagePath);
+      res.sendFile(resizedImagePath);
+    } else {
+      await sharp(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
+            res.sendFile(resizedImagePath);
     }
 
-    await sharp(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
-    res.status(200);
-    res.sendFile(resizedImagePath);
+    
   } catch (err) {
     console.error(err);
     res.status(500).send('Error occurred while resizing the image.');

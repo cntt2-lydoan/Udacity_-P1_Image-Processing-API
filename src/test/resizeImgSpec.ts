@@ -1,16 +1,28 @@
 import { app } from '../index';
 import request from 'supertest';
+import fs from 'fs';
+import path from 'path';
 
 describe('Check Resize Image Success, it will return status 200', () => {
   let response: request.Response;
   const imageName = 'image.png';
-  const width = 100;
-  const height = 100;
+  const width = 200;
+  const height = 300;
 
   beforeEach(async () => {
+    
+    const fileSavedName = `${imageName}_${width}x${height}.jpg`
+    const RESIZED_IMGS_DIR = path.join(__dirname, `../../Asset/resizeImg/${fileSavedName}`);
+    //check resizeimage exist
+    if (fs.existsSync(RESIZED_IMGS_DIR)) {
+      //delete resizeimage exist
+      await fs.unlinkSync(RESIZED_IMGS_DIR);
+    }
+
     response = await request(app).get(
       `/api/image?imageName=${imageName}&width=${width}&height=${height}`
     );
+
   });
 
   it('should return a status code of 200', async () => {

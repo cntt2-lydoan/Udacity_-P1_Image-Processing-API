@@ -14,12 +14,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../index");
 const supertest_1 = __importDefault(require("supertest"));
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 describe('Check Resize Image Success, it will return status 200', () => {
     let response;
     const imageName = 'image.png';
-    const width = 100;
-    const height = 100;
+    const width = 200;
+    const height = 300;
     beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        const fileSavedName = `${imageName}_${width}x${height}.jpg`;
+        const RESIZED_IMGS_DIR = path_1.default.join(__dirname, `../../Asset/resizeImg/${fileSavedName}`);
+        //check resizeimage exist
+        if (fs_1.default.existsSync(RESIZED_IMGS_DIR)) {
+            //delete resizeimage exist
+            yield fs_1.default.unlinkSync(RESIZED_IMGS_DIR);
+        }
         response = yield (0, supertest_1.default)(index_1.app).get(`/api/image?imageName=${imageName}&width=${width}&height=${height}`);
     }));
     it('should return a status code of 200', () => __awaiter(void 0, void 0, void 0, function* () {

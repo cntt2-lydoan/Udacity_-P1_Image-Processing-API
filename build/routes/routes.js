@@ -47,11 +47,12 @@ const imgResize = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         if (fs_1.default.existsSync(resizedImagePath)) {
-            fs_1.default.unlinkSync(resizedImagePath);
+            res.sendFile(resizedImagePath);
         }
-        yield (0, sharp_1.default)(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
-        res.status(200);
-        res.sendFile(resizedImagePath);
+        else {
+            yield (0, sharp_1.default)(imagePath).resize(widthInt, heightInt).toFile(resizedImagePath);
+            res.sendFile(resizedImagePath);
+        }
     }
     catch (err) {
         console.error(err);
